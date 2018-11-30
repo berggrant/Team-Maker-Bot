@@ -88,23 +88,27 @@ client.on('message', (receivedMessage) => {
     //making teams YAY!
     var teamOne = [],
       teamTwo = [];
+    var teamOneTotal = 0, teamTwoTotal = 0;
     for (let i = 0; i < numOfPlayers; i++) {
-      if (i % 2 == 0) {
+      if(teamTwoTotal >= teamOneTotal)
+      {
         teamOne.push(combined[i][1]);
-      } else {
+        teamOneTotal = teamOneTotal + combined[i][0];
+        i++;
         teamTwo.push(combined[i][1]);
+        teamTwoTotal = teamTwoTotal + combined [i][0];
+      }
+      else {
+        teamTwo.push(combined[i][1]);
+        teamTwoTotal = teamTwoTotal + combined[i][0];
+        i++;
+        teamOne.push(combined[i][1]);
+        teamOneTotal = teamOneTotal + combined [i][0];
       }
     }
 
-
+    //prints the teams :D
     receivedMessage.channel.send("**Team 1:** " + teamOne.toString() + " **Team 2:** " + teamTwo.toString());
-    /*var teamOneString, teamTwoString = "";
-    for (let i = teamOne.length; i > 0; i--)
-    {
-        teamOneString = teamOneString + teamOne[i-1] + " ";
-        teamTwoString = teamTwoString + teamTwo[i-1] + " ";
-    }
-    receivedMessage.channel.send("Players on team one are: " + teamOneString + ".  Players on team two are: " + teamTwoString);*/
   }
 
 })
